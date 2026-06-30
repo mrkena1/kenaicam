@@ -178,10 +178,10 @@ function isSmiling(lm, cal) {
   return dist(lm[61], lm[291]) / e > cal.thr.mouth_w_hi;
 }
 function headUp(lm, cal) {
-  return (lm[1].y - lm[168].y) > cal.thr.nose_y_hi;
+  return (lm[1].y - lm[168].y) < cal.thr.nose_y_lo;
 }
 function headDown(lm, cal) {
-  return (lm[1].y - lm[168].y) < cal.thr.nose_y_lo;
+  return (lm[1].y - lm[168].y) > cal.thr.nose_y_hi;
 }
 function lookingLeft(lm, cal) {
   // مركز الوجه يذهب لليمين بالشاشة = المستخدم ينظر يسار
