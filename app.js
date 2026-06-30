@@ -184,11 +184,10 @@ function headDown(lm, cal) {
   return (lm[1].y - lm[168].y) > cal.thr.nose_y_hi;
 }
 function lookingLeft(lm, cal) {
-  // مركز الوجه يذهب لليمين بالشاشة = المستخدم ينظر يسار
-  return (lm[33].x + lm[263].x) / 2 > cal.thr.face_x_hi;
+  return (lm[33].x + lm[263].x) / 2 < cal.thr.face_x_lo;
 }
 function lookingRight(lm, cal) {
-  return (lm[33].x + lm[263].x) / 2 < cal.thr.face_x_lo;
+  return (lm[33].x + lm[263].x) / 2 > cal.thr.face_x_hi;
 }
 function isNeutral(lm, cal) {
   // وجه محايد: لا فم مفتوح، لا حواجب مرفوعة، لا رأس متحرك، لا ابتسامة
@@ -497,6 +496,7 @@ function renderLoop() {
     voteBuf.push(det);
     const stable = voteBuf.top();
     if (stable !== undefined) setMeme(stable);
+    drawHud(det, stable, W);
   }
 
   requestAnimationFrame(renderLoop);
@@ -518,7 +518,17 @@ function setMeme(key) {
   }
 }
 
-function resizeOverlay() {
+function drawHud(raw, stable, W) {
+  const label = `raw: ${raw ?? "neutral"}   stable: ${stable ?? "neutral"}`;
+  ctx.font = "14px monospace";
+  const tw = ctx.measureText(label).width;
+  ctx.fillStyle = "rgba(0,0,0,0.5)";
+  ctx.fillRect(8, 8, Math.min(W - 16, tw + 20), 28);
+  ctx.fillStyle = stable ? "rgb(80,220,80)" : "rgb(160,160,160)";
+  ctx.fillText(label, 16, 27);
+}
+
+
   const r = camWrap.getBoundingClientRect();
   overlay.width = r.width; overlay.height = r.height;
 }
