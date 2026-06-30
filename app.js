@@ -528,7 +528,7 @@ function drawHud(raw, stable, W) {
   ctx.fillText(label, 16, 27);
 }
 
-
+function resizeOverlay() {
   const r = camWrap.getBoundingClientRect();
   overlay.width = r.width; overlay.height = r.height;
 }
