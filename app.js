@@ -203,7 +203,7 @@ function browsDown(lm, cal) {
   const bi_y = lm[55].y - lm[9].y;
   const bd_y = lm[285].y - lm[9].y;
   // الحواجب أقل ارتفاعاً من المعتاد (y أكبر = أسفل)
-  return bi_y < cal.thr.bi_y_lo * 0.88 && bd_y < cal.thr.bd_y_lo * 0.88;
+  return bi_y > cal.thr.bi_y_lo * 0.88 && bd_y > cal.thr.bd_y_lo * 0.88;
 }
 
 // 1. looksup — رأس مرفوع للأعلى
